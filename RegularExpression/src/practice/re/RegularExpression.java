@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class RegularExpression {
 
 	public static void main(String[] args) {
-		new RegularExpression().practiceSecond();
+		new RegularExpression().validateExtention();
 	}
 	
 	public void firstMatchInput() {
@@ -81,5 +81,102 @@ public class RegularExpression {
 		System.out.println(Pattern.matches("[789]{1}[0-9]{9}", "9999999999"));
 	}
 	
-	}
+	public void otherExamples() {
+		/**
+		/s : matches any whitespace characters such as space and tab
+		/S : matches any non-whitespace characters
+		/d : matches any digit character
+		/D : matches any non-digit characters
+		/w : matches any word character (basically alpha-numeric)
+		/W : matches any non-word character
+		/b : matches any word boundary (this would include spaces, dashes, commas, semi-colons, etc)
+		*/
+		System.out.println(Pattern.matches("^\\d{3}", "912"));//starting 3 should be number
+		System.out.println(Pattern.matches("(.)*\\d{3}$", "aa2121"));//ending with 3 digit with any length
+		Pattern pattern = Pattern.compile("\\.");
+		Matcher matcher = pattern.matcher("gaurav.rajput");
+		if(matcher.find())
+		System.out.println(matcher.start());//output is 6 as it starts from 0
+		}
+/*
+ * Java regex with case insensitive
+ */
+	
+public void caseInsencestive() {
+/*We need to pass Pattern.CASE_INSENSITIVE constant to Pattern.compile() method, 
+*along with regular expression. This makes case insensitive matches
+**/
+	Pattern pattern = Pattern.compile("gaurav",Pattern.CASE_INSENSITIVE);
+	Matcher matcher = pattern.matcher("My name is GauraV Rajput");
+	if(matcher.find())
+	System.out.println(matcher.start());
+}
 
+/*
+ * Java regex to validate Ip address
+ */
+public void validateIpAddress() {
+	// ^ denotes starting and $ denotes end of the address
+	Pattern pattern = Pattern.compile("^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$");
+	Matcher matcher = pattern.matcher("192.10.07.111");
+	if(matcher.find())
+	System.out.println("Valid Ip address");
+	else {
+		System.out.println("Not a Valid Ip address");
+	}
+}
+
+/*
+ * Java regex to remove multiple spaces into single space
+ */
+public void removeMultipleSpace() {
+	Pattern pattern = Pattern.compile("\\s+");
+	Matcher matcher = pattern.matcher("I       have  lots    of spaces");
+	System.out.println(matcher.replaceAll(" "));
+}
+
+/*
+ * Java regex to validate email id
+ */
+public void validateEmailId() {
+	Pattern pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[a-zA-Z]{2,})$");
+	Matcher matcher = pattern.matcher("satish_12raj.put@google.com");
+	if(matcher.find())
+	System.out.println("Valid email");
+	else {
+		System.out.println("Not a Valid email");
+	}
+}
+
+/*
+ * Java regex to validate user name
+ */
+public void validatePassword() {
+	//Password should contain one digit, one lower case char, 
+	//one upper case char, some special chars, 
+	//length should be within 6 to 15 chars
+	Pattern pat=Pattern.compile("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,15}");
+	Matcher matcher=pat.matcher("B#2@asn");
+	if(matcher.find())
+		System.out.println("Valid credentials");
+		else {
+			System.out.println("Invalid credentials");
+		}
+}
+
+
+/*
+ * Java regex to validate file extension
+ */
+public void validateExtention() {
+//(?i) starts case-insensitive mode
+//(?-i) turns off case-insensitive mode
+	Pattern pat=Pattern.compile("\\.(?i)(txt|doc|csv|pdf)$");
+	Matcher matcher=pat.matcher("abc.xt");
+	if(matcher.find())
+		System.out.println("Valid extension");
+		else {
+			System.out.println("Invalid extension");
+		}
+}
+}
